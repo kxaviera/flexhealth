@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login & Sign Up — Flex Health</title>
+
+  <meta name="description" content="Sign in with OTP to track orders, save wishlists, and write product reviews at Flex Health.">
+
+  <link rel="stylesheet" href="css/styles.css?v=20260728r">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+
+</head>
+
+<body class="auth-page">
+
+
+
+  <div id="site-header"></div>
+
+  <div id="auth-test-banner"></div>
+
+
+
+  <!-- Firebase invisible reCAPTCHA -->
+
+  <div id="firebase-recaptcha" class="firebase-recaptcha"></div>
+
+
+
+  <section class="auth-section">
+
+    <div class="container auth-container">
+
+      <div class="auth-card">
+
+        <div class="auth-tabs">
+
+          <button type="button" class="auth-tab active" data-tab="login">Login</button>
+
+          <button type="button" class="auth-tab" data-tab="signup">Sign Up</button>
+
+        </div>
+
+
+
+        <!-- Login: phone → OTP -->
+
+        <div class="auth-panel active" id="auth-login">
+
+          <h1>Welcome back</h1>
+
+          <p class="auth-sub">Enter your mobile number — we'll send a one-time password via SMS</p>
+
+
+
+          <div class="auth-step active" id="login-step-phone">
+
+            <form id="login-phone-form" class="auth-form">
+
+              <div class="form-group">
+
+                <label>Mobile Number *</label>
+
+                <div class="phone-input">
+
+                  <span class="phone-input__prefix">+91</span>
+
+                  <input type="tel" name="phone" required placeholder="98765 43210" pattern="[0-9\\s-]{10,14}" autocomplete="tel">
+
+                </div>
+
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--lg" style="width:100%">Send OTP</button>
+
+            </form>
+
+          </div>
+
+
+
+          <div class="auth-step" id="login-step-otp">
+
+            <p class="auth-otp-sent">OTP sent to <strong id="login-otp-phone"></strong></p>
+
+            <div id="login-otp-hint" class="otp-hint"></div>
+
+            <form id="login-otp-form" class="auth-form">
+
+              <div class="form-group">
+
+                <label>Enter 6-digit OTP</label>
+
+                <input type="text" name="otp" class="otp-input" required placeholder="• • • • • •" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" autocomplete="one-time-code">
+
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--lg" style="width:100%">Verify & Sign In</button>
+
+              <button type="button" class="btn btn--outline btn--sm auth-back-btn" data-back="login">← Change number</button>
+
+            </form>
+
+            <p class="auth-resend">Didn't receive? <button type="button" class="auth-link-btn" id="login-resend-otp">Resend OTP</button></p>
+
+          </div>
+
+
+
+          <p class="auth-switch">New here? <button type="button" class="auth-link-btn" data-tab="signup">Create an account</button></p>
+
+        </div>
+
+
+
+        <!-- Signup: details → OTP -->
+
+        <div class="auth-panel" id="auth-signup">
+
+          <h1>Create account</h1>
+
+          <p class="auth-sub">Sign up with your mobile — OTP verification only, no password</p>
+
+
+
+          <div class="auth-step active" id="signup-step-details">
+
+            <form id="signup-details-form" class="auth-form">
+
+              <div class="form-group">
+
+                <label>Full Name *</label>
+
+                <input type="text" name="name" required placeholder="Your name">
+
+              </div>
+
+              <div class="form-group">
+
+                <label>Mobile Number *</label>
+
+                <div class="phone-input">
+
+                  <span class="phone-input__prefix">+91</span>
+
+                  <input type="tel" name="phone" required placeholder="98765 43210" pattern="[0-9\\s-]{10,14}">
+
+                </div>
+
+              </div>
+
+              <div class="form-group">
+
+                <label>Email (optional)</label>
+
+                <input type="email" name="email" placeholder="you@email.com">
+
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--lg" style="width:100%">Send OTP</button>
+
+            </form>
+
+          </div>
+
+
+
+          <div class="auth-step" id="signup-step-otp">
+
+            <p class="auth-otp-sent">OTP sent to <strong id="signup-otp-phone"></strong></p>
+
+            <div id="signup-otp-hint" class="otp-hint"></div>
+
+            <form id="signup-otp-form" class="auth-form">
+
+              <div class="form-group">
+
+                <label>Enter 6-digit OTP</label>
+
+                <input type="text" name="otp" class="otp-input" required placeholder="• • • • • •" maxlength="6" pattern="[0-9]{6}" inputmode="numeric">
+
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--lg" style="width:100%">Verify & Create Account</button>
+
+              <button type="button" class="btn btn--outline btn--sm auth-back-btn" data-back="signup">← Edit details</button>
+
+            </form>
+
+            <p class="auth-resend">Didn't receive? <button type="button" class="auth-link-btn" id="signup-resend-otp">Resend OTP</button></p>
+
+          </div>
+
+
+
+          <p class="auth-switch">Already have an account? <button type="button" class="auth-link-btn" data-tab="login">Sign in with OTP</button></p>
+
+        </div>
+
+
+
+        <div id="auth-test-actions"></div>
+
+      </div>
+
+
+
+      <div class="auth-aside">
+
+        <h2>Why create an account?</h2>
+
+        <ul class="auth-benefits">
+
+          <li>📱 Password-free login with SMS OTP</li>
+
+          <li>📦 Track all your orders in one place</li>
+
+          <li>⚡ Faster checkout with saved details</li>
+
+          <li>♡ Save products to your wishlist</li>
+
+          <li>⭐ Rate & review products you've bought</li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <div id="site-footer"></div>
+
+
+
+  <!-- Firebase SDK (Phone Auth) -->
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+  <script src="js/firebase-config.js?v=20260728r"></script>
+
+  <script src="js/main.js?v=20260728r"></script>
+
+  <script src="js/firebase-auth.js?v=20260728r"></script>
+
+  <script src="js/api.js?v=20260728r"></script>
+
+</body>
+
+</html>
+
+

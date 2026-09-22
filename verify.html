@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Product — Flex Health</title>
+  <meta name="description" content="Verify your Flex Health supplement is 100% genuine — enter the product code or scan the QR label.">
+  <link rel="stylesheet" href="css/styles.css?v=20260729y">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <div class="page-hero page-hero--compact page-hero--verify">
+    <div class="container">
+      <h1>Verify Product Authenticity</h1>
+      <p>Enter the code on your product label or scan the QR code to confirm genuine Flex Health stock</p>
+    </div>
+  </div>
+
+  <section class="section verify-section">
+    <div class="container verify-layout">
+      <div class="verify-panel">
+        <div class="verify-tabs" role="tablist">
+          <button type="button" class="verify-tabs__btn active" data-verify-tab="code" role="tab" aria-selected="true">Enter Code</button>
+          <button type="button" class="verify-tabs__btn" data-verify-tab="scan" role="tab" aria-selected="false">Scan QR</button>
+        </div>
+
+        <div class="verify-tab-panel" id="verify-tab-code">
+          <form id="verify-code-form" class="verify-form">
+            <div class="form-group">
+              <label for="verify-code-input">Product / Verification Code</label>
+              <input id="verify-code-input" type="text" name="code" required placeholder="e.g. FH-DEMO001 or SKU" autocomplete="off" spellcheck="false">
+              <small class="form-hint">Found on the product label, box, or QR sticker</small>
+            </div>
+            <button type="submit" class="btn btn--primary btn--lg" style="width:100%">Verify Product</button>
+          </form>
+        </div>
+
+        <div class="verify-tab-panel" id="verify-tab-scan" hidden>
+          <div id="qr-reader" class="verify-qr-reader"></div>
+          <p class="verify-qr-hint">Point your camera at the QR code on the product packaging</p>
+          <button type="button" class="btn btn--outline btn--sm" id="qr-stop-btn" hidden>Stop Camera</button>
+        </div>
+      </div>
+
+      <div class="verify-side">
+        <div id="verify-result"></div>
+        <div class="verify-info">
+          <h3>How verification works</h3>
+          <ul>
+            <li>Enter the verification code printed on your product label</li>
+            <li>If the code is valid, your product is confirmed as genuine Flex Health stock</li>
+            <li>Contact us if your code is not recognized</li>
+          </ul>
+          <p class="verify-info__help">Need help? <a href="contact.html">Contact support</a> or WhatsApp <a href="https://wa.me/919246501017" target="_blank" rel="noopener">+91 924 650 1017</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="js/main.js?v=20260729z"></script>
+  <script src="js/api.js?v=20260729z"></script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="js/verify.js?v=20260729z"></script>
+</body>
+</html>

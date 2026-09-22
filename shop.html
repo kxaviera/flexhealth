@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Flex Health | Whey, Mass Gainer, Creatine, BCAA & More</title>
+  <meta name="description" content="Browse all genuine supplements at Flex Health. Shop by category and brand — whey protein, mass gainers, creatine, BCAA, pre-workout with free shipping.">
+  <link rel="stylesheet" href="css/styles.css?v=20260728p">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>Shop Supplements</h1>
+      <p>100% genuine products · Free shipping across India · Cash on Delivery</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:32px">
+    <!-- Category Tabs -->
+    <div class="shop-categories" id="shop-cat-tabs"></div>
+
+    <!-- Breadcrumb -->
+    <div class="shop-path" id="shop-path"></div>
+
+    <!-- Brand Picker (shown when category selected) -->
+    <div id="brand-picker" style="display:none"></div>
+  </div>
+
+  <div class="container shop-layout">
+    <aside class="shop-sidebar">
+      <div class="filter-group">
+        <h3>Categories</h3>
+        <label><input type="checkbox" data-filter-category value="whey"> Whey Protein</label>
+        <label><input type="checkbox" data-filter-category value="mass-gainer"> Mass Gainer</label>
+        <label><input type="checkbox" data-filter-category value="creatine"> Creatine</label>
+        <label><input type="checkbox" data-filter-category value="bcaa"> BCAA & Amino</label>
+        <label><input type="checkbox" data-filter-category value="pre-workout"> Pre Workout</label>
+        <label><input type="checkbox" data-filter-category value="vitamins"> Vitamins</label>
+        <label><input type="checkbox" data-filter-category value="combo"> Combo Offers</label>
+      </div>
+      <div class="filter-group">
+        <h3>Brands</h3>
+        <div id="sidebar-brands"></div>
+      </div>
+      <div class="filter-group">
+        <h3>Availability</h3>
+        <label><input type="checkbox" id="filter-instock" onclick="location.href=FlexHealth.inStockFilterUrl(this.checked)"> In Stock Only</label>
+      </div>
+      <div class="filter-group">
+        <h3>Offers</h3>
+        <label><input type="checkbox" onclick="location.href='shop.html?sale=true'"> On Sale</label>
+        <label><input type="checkbox" onclick="location.href='shop.html'"> New Arrivals</label>
+      </div>
+      <div class="filter-group">
+        <h3>Price Range</h3>
+        <div class="price-range">
+          <input type="number" placeholder="Min ₹" id="price-min">
+          <span>—</span>
+          <input type="number" placeholder="Max ₹" id="price-max">
+        </div>
+        <button class="btn btn--primary btn--sm" style="margin-top:12px;width:100%" onclick="
+          const min = +document.getElementById('price-min').value || 0;
+          const max = +document.getElementById('price-max').value || Infinity;
+          const grid = document.getElementById('shop-products');
+          const filtered = FlexHealth.data.products.filter(p => p.price >= min && p.price <= max);
+          grid.innerHTML = filtered.map(p => FlexHealth.productCard(p)).join('');
+          document.getElementById('product-count').textContent = filtered.length + ' products found';
+        ">Apply</button>
+      </div>
+    </aside>
+
+    <main>
+      <div class="shop-toolbar">
+        <span class="shop-toolbar__count" id="product-count">Loading...</span>
+        <select id="sort-select">
+          <option value="default">Sort by: Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Top Rated</option>
+          <option value="newest">Newest First</option>
+        </select>
+      </div>
+      <div class="product-grid" id="shop-products"></div>
+    </main>
+  </div>
+
+  <!-- Flash Sale Banner on Shop -->
+  <section class="section section--gray">
+    <div class="container">
+      <div class="flash-sale">
+        <div class="flash-sale__header">
+          <div>
+            <h2 class="flash-sale__title">🔥 Discount <span>Products</span></h2>
+            <p style="opacity:.8;margin-top:4px">Ends tonight at midnight</p>
+          </div>
+          <div class="countdown">
+            <div class="countdown__item"><span class="countdown__num" data-hours>00</span><span class="countdown__label">Hours</span></div>
+            <div class="countdown__item"><span class="countdown__num" data-mins>00</span><span class="countdown__label">Mins</span></div>
+            <div class="countdown__item"><span class="countdown__num" data-secs>00</span><span class="countdown__label">Secs</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="js/main.js?v=20260728p"></script>
+  <script src="js/api.js?v=20260728p"></script>
+</body>
+</html>

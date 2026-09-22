@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Status — Flex Health</title>
+  <link rel="stylesheet" href="css/styles.css?v=20260728q">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+</head>
+<body>
+  <div id="site-header"></div>
+  <section class="section auth-section">
+    <div class="container" style="max-width:520px">
+      <div class="auth-card" id="payment-return-root">
+        <div class="admin-loading"><div class="admin-loading__spinner"></div><p>Verifying payment…</p></div>
+      </div>
+    </div>
+  </section>
+  <div id="site-footer"></div>
+  <script src="js/main.js?v=20260807a"></script>
+  <script src="js/api.js?v=20260807a"></script>
+  <script src="js/payment.js?v=20260807a"></script>
+  <script>
+    (async function () {
+      const root = document.getElementById('payment-return-root');
+      const params = new URLSearchParams(location.search);
+      const paymentId = params.get('paymentId');
+      let pending = null;
+      try { pending = JSON.parse(sessionStorage.getItem('flexhealth_pending_pay') || 'null'); } catch { pending = null; }
+
+      if (!paymentId) {
+        root.innerHTML = '<h1>Payment</h1><p>Missing payment reference.</p><a href="cart.html" class="btn btn--primary">Back to Cart</a>';
+        return;
+      }
+
+      const body = {};
+      if (pending?.phone) body.phone = pending.phone;
+
+      try {
+        const res = await fetch('/api/payments/' + encodeURIComponent(paymentId) + '/phonepe/verify', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          const err = new Error(data.msg || 'Payment verification failed');
+          err.state = data.state;
+          throw err;
+        }
+
+        try { sessionStorage.removeItem('flexhealth_pending_pay'); } catch { /* ignore */ }
+        try {
+          localStorage.setItem('flexhealth_cart', '[]');
+          if (typeof FlexHealth !== 'undefined') {
+            FlexHealth.cart = [];
+            FlexHealth.saveCart?.();
+          }
+        } catch { /* ignore */ }
+
+        const order = data.order;
+        root.innerHTML = `
+          <div class="cart-success__icon">✓</div>
+          <h1>Payment Successful</h1>
+          <p>Your order <strong>${FlexHealth.escapeHtml(order.id)}</strong> is confirmed.</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px">
+            <a href="order.html?id=${encodeURIComponent(order.id)}" class="btn btn--primary">Track Order</a>
+            <a href="shop.html" class="btn btn--outline">Continue Shopping</a>
+          </div>`;
+      } catch (e) {
+        const failed = e.state === 'FAILED' || e.state === 'EXPIRED' || /failed|expired/i.test(e.message || '');
+        root.innerHTML = `
+          <h1>${failed ? 'Payment Failed' : 'Payment Pending'}</h1>
+          <p>${FlexHealth.escapeHtml(e.message || 'We could not confirm your payment yet.')}</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px">
+            <button type="button" class="btn btn--primary" onclick="location.reload()">Check Again</button>
+            <a href="order.html?id=${encodeURIComponent(pending?.orderId || '')}" class="btn btn--outline">View Order</a>
+            <a href="contact.html" class="btn btn--outline">Contact Support</a>
+          </div>`;
+      }
+    })();
+  </script>
+</body>
+</html>

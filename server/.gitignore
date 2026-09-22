@@ -1,0 +1,6 @@
+node_modules/
+flexhealth.db
+flexhealth.db-wal
+flexhealth.db-shm
+.env
+firebase-service-account.json

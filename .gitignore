@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+server/node_modules/
+mobile/.dart_tool/
+mobile/build/
+mobile/.flutter-plugins-dependencies
+mobile/.packages
+mobile/pubspec.lock
+
+# Environment & secrets — never commit
+.env
+.env.local
+.env.*.local
+server/.env
+server/firebase-service-account.json
+**/credentials*.json
+**/*service-account*.json
+
+# Database
+server/flexhealth.db
+server/flexhealth.db-wal
+server/flexhealth.db-shm
+*.db
+*.db-wal
+*.db-shm
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Local previews / dumps
+mobile-preview.html.bak
+*.map

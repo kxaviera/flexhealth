@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Flex Health — genuine supplements. Shop whey, mass gainer, creatine & more.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Flex Health">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>Flex Health</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    html, body { height: 100%; margin: 0; background: #fff; }
+    .boot {
+      height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-family: Inter, system-ui, sans-serif; color: #111827;
+    }
+    .boot-logo {
+      width: 64px; height: 64px; border-radius: 14px; background: #111827;
+      color: #fff; font-weight: 800; font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .boot-name { margin-top: 14px; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+    .boot-name span { color: #059669; }
+  </style>
+</head>
+<body>
+  <div class="boot" id="boot">
+    <div class="boot-logo">FH</div>
+    <div class="boot-name">Flex <span>Health</span></div>
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var el = document.getElementById('boot');
+      if (el) el.remove();
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
